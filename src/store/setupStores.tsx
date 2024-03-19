@@ -1,4 +1,4 @@
-import { createContext, useContext } from 'react';
+import React, { createContext, useContext } from 'react';
 
 type Constructor<T = any> = new (...args: any[]) => T;
 
