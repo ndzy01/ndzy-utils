@@ -114,7 +114,9 @@ const service = (options: {
 
         resolve(res.data);
       })
-      .catch(() => {
+      .catch((error: any) => {
+        console.log(error);
+
         reject('出错了，请联系管理员！');
       });
   });
