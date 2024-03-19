@@ -1,0 +1,13 @@
+{
+  "compilerOptions": {
+    "rootDir": "./src",
+    "declaration": true,
+    "declarationDir": "./dist",
+    "outDir": "./dist",
+    "target": "ES2015",
+    "module": "ES2020",
+    "strict": true,
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true
+  }
+}
