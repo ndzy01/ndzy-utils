@@ -1,3 +1,4 @@
+import React from 'react';
 // @ts-ignore
 import { initCloud } from '@wxcloud/cloud-sdk';
 import { isEmpty } from 'lodash';
