@@ -7,6 +7,7 @@ const login = (): Promise<boolean> => {
       content: (
         <>
           <Form
+            style={{ maxHeight: 800 }}
             name="login"
             onFinish={(values) => {
               if (values.mobile === '2024' && values.password === '2024') {
@@ -14,6 +15,7 @@ const login = (): Promise<boolean> => {
               } else {
                 resolve(false);
               }
+              Modal.destroyAll();
             }}
             scrollToFirstError
           >
