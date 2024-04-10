@@ -3,6 +3,7 @@ import React from 'react';
 import { initCloud } from '@wxcloud/cloud-sdk';
 import { isEmpty } from 'lodash';
 import { Button, Form, Input, Modal, message } from 'antd';
+import './index.css';
 
 const cloud = initCloud();
 const c = cloud.Cloud({
@@ -58,6 +59,7 @@ const service = (options: {
         if (res?.statusCode === 401) {
           Modal.info({
             style: { maxHeight: 600 },
+            className: 'ndzy-login-modal',
             content: (
               <>
                 <Form

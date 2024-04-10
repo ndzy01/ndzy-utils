@@ -1,5 +1,6 @@
 import commonjs from '@rollup/plugin-commonjs';
 import typescript from '@rollup/plugin-typescript';
+import postcss from 'rollup-plugin-postcss';
 
 export default {
   input: 'src/index.ts',
@@ -14,5 +15,11 @@ export default {
       name: 'index.umd.js',
     },
   ],
-  plugins: [commonjs(), typescript()],
+  plugins: [
+    commonjs(),
+    typescript(),
+    postcss({
+      extract: true,
+    }),
+  ],
 };
