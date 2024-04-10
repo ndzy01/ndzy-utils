@@ -57,6 +57,7 @@ const service = (options: {
       .then((res: { data: any; code: number; msg: string; [k: string]: any }) => {
         if (res?.statusCode === 401) {
           Modal.info({
+            style: { maxHeight: 600 },
             content: (
               <>
                 <Form
