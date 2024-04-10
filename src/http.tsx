@@ -97,7 +97,7 @@ const service = (options: {
                     <Input.Password />
                   </Form.Item>
                   <Form.Item>
-                    <Button type="primary" htmlType="submit">
+                    <Button style={{ width: '100%' }} type="primary" htmlType="submit">
                       登录
                     </Button>
                   </Form.Item>
