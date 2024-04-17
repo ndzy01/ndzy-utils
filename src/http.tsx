@@ -4,6 +4,7 @@ import { initCloud } from '@wxcloud/cloud-sdk';
 import { isEmpty } from 'lodash';
 import { Button, Form, Input, Modal, message } from 'antd';
 import './index.css';
+import axios, { AxiosInstance, AxiosRequestHeaders } from 'axios';
 
 const cloud = initCloud();
 const c = cloud.Cloud({
@@ -127,3 +128,62 @@ const service = (options: {
 };
 
 export default service;
+
+// ------
+class AxiosService {
+  private static instance: AxiosInstance;
+
+  private constructor() {}
+
+  public static getInstance(url: string): AxiosInstance {
+    if (!AxiosService.instance) {
+      AxiosService.instance = axios.create({
+        baseURL: url, // 基础URL
+        timeout: 60000, // 请求超时设置
+        withCredentials: false, // 跨域请求是否需要携带 cookie
+      });
+    }
+    return AxiosService.instance;
+  }
+}
+
+export const createAxiosInstance = (url: string) => {
+  const axiosInstance = AxiosService.getInstance(url);
+  // 创建请求拦截
+  axiosInstance.interceptors.request.use(
+    (config) => {
+      const token = localStorage.getItem('token');
+
+      if (token) {
+        config.headers = { Authorization: 'Basic' + ' ' + token } as AxiosRequestHeaders;
+      }
+
+      return config;
+    },
+    (error) => {
+      Promise.reject(error);
+    },
+  );
+  // 创建响应拦截
+  axiosInstance.interceptors.response.use(
+    (res) => {
+      const data = res.data;
+
+      if (res.data.status === 1) {
+        message.error(res.data.msg);
+      }
+
+      if (res.data.status === 0) {
+        message.success(res.data.msg);
+      }
+
+      return data;
+    },
+    () => {
+      message.error('出错了');
+      return Promise.reject('出错了');
+    },
+  );
+
+  return axiosInstance;
+};
