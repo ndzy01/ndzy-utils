@@ -219,9 +219,6 @@ export const createAxiosInstance = (url: string) => {
   // 创建响应拦截
   axiosInstance.interceptors.response.use(
     (res) => {
-      if (res.data.statusCode === 401) {
-        login(axiosInstance);
-      }
       const data = res.data;
 
       if (res.data.status === 1) {
@@ -234,7 +231,11 @@ export const createAxiosInstance = (url: string) => {
 
       return data;
     },
-    () => {
+    (error) => {
+      if (error?.statusCode === 401) {
+        login(axiosInstance);
+      }
+
       message.error('出错了');
       return Promise.reject('出错了');
     },
