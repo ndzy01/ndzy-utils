@@ -6,6 +6,58 @@ import { Button, Form, Input, Modal, message } from 'antd';
 import './index.css';
 import axios, { AxiosInstance, AxiosRequestHeaders } from 'axios';
 
+const login = (service: any) => {
+  Modal.info({
+    style: { maxHeight: 600 },
+    className: 'ndzy-login-modal',
+    content: (
+      <>
+        <Form
+          name="login"
+          onFinish={(values) => {
+            service({
+              url: '/user/login',
+              method: 'POST',
+              data: values,
+            }).then((res: any) => {
+              if (res && res.data && res.data.token) {
+                localStorage.setItem('token', res.data.token);
+                window.location.reload();
+              }
+
+              Modal.destroyAll();
+            });
+          }}
+          scrollToFirstError
+        >
+          <Form.Item name="mobile" label="手机号" rules={[{ required: true, message: '请输入你的手机号!' }]}>
+            <Input className="w-100" />
+          </Form.Item>
+          <Form.Item
+            name="password"
+            label="密码"
+            rules={[
+              {
+                required: true,
+                message: '请输入密码!',
+              },
+            ]}
+            hasFeedback
+          >
+            <Input.Password />
+          </Form.Item>
+          <Form.Item>
+            <Button style={{ width: '100%' }} type="primary" htmlType="submit">
+              登录
+            </Button>
+          </Form.Item>
+        </Form>
+      </>
+    ),
+    footer: null,
+  });
+};
+
 const cloud = initCloud();
 const c = cloud.Cloud({
   identityless: true,
@@ -167,6 +219,9 @@ export const createAxiosInstance = (url: string) => {
   // 创建响应拦截
   axiosInstance.interceptors.response.use(
     (res) => {
+      if (res.data.statusCode === 401) {
+        login(axiosInstance);
+      }
       const data = res.data;
 
       if (res.data.status === 1) {
