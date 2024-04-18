@@ -232,7 +232,7 @@ export const createAxiosInstance = (url: string) => {
       return data;
     },
     (error) => {
-      if (error?.statusCode === 401) {
+      if (error?.response?.data?.statusCode === 401) {
         login(axiosInstance);
       }
 
