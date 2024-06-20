@@ -1,6 +1,7 @@
 {
   "name": "ndzy-utils",
   "version": "0.0.5",
+  "main": "./dist/index.js",
   "type": "module",
   "scripts": {
     "dev": "vite",
