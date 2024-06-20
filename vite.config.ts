@@ -15,6 +15,7 @@ export default defineConfig({
       entry: "src/index.ts", // 组件库入口文件
       name: "NDZYLibrary",
       formats: ["es", "umd"], // 输出格式
+      fileName: "index.js",
     },
     rollupOptions: {
       // 确保外部化处理那些你不想打包进库的依赖
