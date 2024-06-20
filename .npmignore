@@ -6,7 +6,7 @@ components.json
 deploy.sh
 index.html
 postcss.config.js
-README.md
 tailwind.config.js
 tsconfig.json
 vite.config.ts
+tsconfig.node.json
