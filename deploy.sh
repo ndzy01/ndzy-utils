@@ -2,7 +2,7 @@
 # 确保脚本抛出遇到的错误
 set -e
 
-npx rollup -c
+npm run build
 npm version patch
 npm publish
 git push
