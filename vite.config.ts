@@ -3,6 +3,7 @@ import react from "@vitejs/plugin-react"
 import { defineConfig } from "vite"
 import dts from "vite-plugin-dts"
 
+const libName = "NDZYLibrary"
 export default defineConfig({
   plugins: [react(), dts()],
   resolve: {
@@ -13,7 +14,7 @@ export default defineConfig({
   build: {
     lib: {
       entry: "src/index.ts", // 组件库入口文件
-      name: "NDZYLibrary",
+      name: libName,
       formats: ["es", "umd"], // 输出格式
       fileName: "index",
     },
