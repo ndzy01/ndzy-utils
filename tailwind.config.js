@@ -73,8 +73,5 @@ module.exports = {
       },
     },
   },
-  plugins: [
-    require("tailwindcss-animate"),
-    require("tailwindcss-convert-px-to-rem"),
-  ],
+  plugins: [require("tailwindcss-animate")],
 }
