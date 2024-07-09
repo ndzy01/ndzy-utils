@@ -13,7 +13,7 @@
   },
   "lint-staged": {
     "src/**": [
-      "prettier --config .prettierrc.js --write",
+      "prettier --config .prettierrc.cjs --write",
       "eslint --fix"
     ]
   },
