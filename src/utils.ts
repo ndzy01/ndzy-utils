@@ -9,8 +9,6 @@ export const cn = (...inputs: ClassValue[]) => {
 class AxiosService {
   private static instance: AxiosInstance
 
-  private constructor() {}
-
   public static getInstance(url: string): AxiosInstance {
     if (!AxiosService.instance) {
       AxiosService.instance = axios.create({
@@ -39,7 +37,7 @@ export const createAxiosInstance = (url: string) => {
       return config
     },
     (error) => {
-      Promise.reject(error)
+      Promise.reject(error).then()
     }
   )
   // 创建响应拦截
@@ -73,3 +71,23 @@ export const createAxiosInstance = (url: string) => {
 }
 
 export const service = createAxiosInstance("https://ndzy-s.vercel.app")
+
+/**
+ * 清除路由参数
+ * @param params
+ */
+export const clearUrlParams = (params: string[]) => {
+  try {
+    if (!params.length) return
+
+    const url = new URL(window.location.href)
+
+    for (const param of params) {
+      url.searchParams.delete(param)
+    }
+
+    window.history.replaceState({}, document.title, url.toString())
+  } catch (e) {
+    //
+  }
+}
