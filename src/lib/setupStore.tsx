@@ -1,10 +1,11 @@
 import { createContext, useContext } from "react"
+import * as React from "react"
 
 type Constructor<T = any> = new (...args: any[]) => T
 
 type HOC = (
   Children: React.FC | React.ComponentClass
-) => (props: Record<string, any>) => JSX.Element
+) => (props: Record<string, any>) => React.ReactElement
 
 export const setupStores = <T,>(RootStore: Constructor) => {
   const rootStore = new RootStore()
@@ -20,15 +21,13 @@ export const setupStores = <T,>(RootStore: Constructor) => {
   }
 
   const withStores: HOC = (Children) => {
-    const EnhancedComponent = (props: Record<string, any>) => {
+    return (props: Record<string, any>) => {
       return (
         <StoreContext.Provider value={{ state: rootStore }}>
           <Children {...props} />
         </StoreContext.Provider>
       )
     }
-
-    return EnhancedComponent
   }
 
   return { useStores, withStores, StoreContext }

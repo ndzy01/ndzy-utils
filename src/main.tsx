@@ -7,10 +7,10 @@ import "./index.css"
 
 import { withStores } from "./store"
 
-const C = withStores(App)
+const AppWithStore = withStores(App)
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
-    <C />
+    <AppWithStore />
   </React.StrictMode>
 )

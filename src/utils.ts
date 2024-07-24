@@ -17,12 +17,18 @@ class AxiosService {
         withCredentials: false, // 跨域请求是否需要携带 cookie
       })
     }
+
     return AxiosService.instance
   }
 }
 
+/**
+ * 请求实例
+ * @param url
+ */
 export const createAxiosInstance = (url: string) => {
   const axiosInstance = AxiosService.getInstance(url)
+
   // 创建请求拦截
   axiosInstance.interceptors.request.use(
     (config) => {
@@ -40,28 +46,14 @@ export const createAxiosInstance = (url: string) => {
       Promise.reject(error).then()
     }
   )
+
   // 创建响应拦截
   axiosInstance.interceptors.response.use(
-    (res) => {
-      const data = res.data
-
-      if (res.data.status === 1) {
-        alert(res?.data?.msg)
-      }
-
-      if (res.data.status === 0) {
-        alert(res?.data?.msg)
-      }
-
-      return data
-    },
+    (res) => res.data,
     (error) => {
       if (error?.response?.data?.statusCode === 401) {
-        alert("登录失效，请重新登录")
-        return
+        return Promise.reject("登录失效，请重新登录")
       }
-
-      alert("出错了，请联系管理员")
 
       return Promise.reject("出错了，请联系管理员")
     }
