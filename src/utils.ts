@@ -52,10 +52,10 @@ export const createAxiosInstance = (url: string) => {
     (res) => res.data,
     (error) => {
       if (error?.response?.data?.statusCode === 401) {
-        return Promise.reject("登录失效，请重新登录")
+        return Promise.resolve({ status: 1, msg: "登录失效，请重新登录" })
       }
 
-      return Promise.reject("出错了，请联系管理员")
+      return Promise.resolve({ status: 1, msg: "出错了，请联系管理员" })
     }
   )
 
