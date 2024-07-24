@@ -12,3 +12,4 @@ vite.config.ts
 tsconfig.node.json
 .husky
 .idea
+README.md
