@@ -2,6 +2,8 @@ import axios, { AxiosInstance, AxiosRequestHeaders } from "axios"
 import { clsx, type ClassValue } from "clsx"
 import { twMerge } from "tailwind-merge"
 
+import { message } from "@/components/message.tsx"
+
 export const cn = (...inputs: ClassValue[]) => {
   return twMerge(clsx(inputs))
 }
@@ -49,13 +51,19 @@ export const createAxiosInstance = (url: string) => {
 
   // 创建响应拦截
   axiosInstance.interceptors.response.use(
-    (res) => res.data,
+    (res) => {
+      message({ content: res.data.msg })
+
+      return res.data
+    },
     (error) => {
       if (error?.response?.data?.statusCode === 401) {
-        return Promise.resolve({ status: 1, msg: "登录失效，请重新登录" })
+        message({ content: "登录失效，请重新登录" })
+
+        return
       }
 
-      return Promise.resolve({ status: 1, msg: "出错了，请联系管理员" })
+      message({ content: "出错了，请联系管理员" })
     }
   )
 

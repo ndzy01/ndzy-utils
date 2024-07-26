@@ -1,0 +1,15 @@
+.message-container {
+  position: fixed;
+  top: 50px;
+  right: 20px;
+  z-index: 999;
+  width: 100%;
+}
+
+.message {
+  background: #f0f0f0;
+  padding: 10px 20px;
+  margin-bottom: 10px;
+  border-radius: 5px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}

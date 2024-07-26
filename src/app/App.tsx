@@ -1,26 +1,26 @@
-import { useStores } from "@/store"
 import { observer } from "mobx-react-lite"
+
+import { message } from "@/components/message.tsx"
 
 import { Button } from "../components/ui/button.tsx"
 
-const T = (props: any) => {
-  return <div {...props}>111</div>
-}
-
 const App = observer(() => {
-  const {
-    demo: {
-      state: { count },
-      updateState,
-    },
-  } = useStores()
-
   return (
     <>
-      <Button onClick={() => updateState({ count: count + 1 })}>{count}</Button>
+      <Button
+        onClick={() => {
+          message({ content: "111", style: { height: "200px" } })
+        }}
+      >
+        消息
+      </Button>
 
-      <Button asChild>
-        <T />
+      <Button
+        onClick={() => {
+          message({ content: "222", duration: 300, style: { height: "50px" } })
+        }}
+      >
+        消息
       </Button>
     </>
   )
