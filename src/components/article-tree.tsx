@@ -1,4 +1,6 @@
-import React, { useEffect, useState } from "react"
+import React, { useContext, useEffect, useState } from "react"
+import { ConfigContext } from "@/lib/configContext"
+import classNames from "classnames"
 import RCTree from "rc-tree"
 
 import "rc-tree/assets/index.css"
@@ -69,7 +71,7 @@ const findPath: any = (data: any[], targetId: string, path = []) => {
   return []
 }
 
-interface ArticleTreeProps {
+export interface ArticleTreeProps {
   placeholder: string
   data: any[]
   value?: string[]
@@ -77,21 +79,89 @@ interface ArticleTreeProps {
   onEdit?: any
   onDel?: any
   height?: number
+  rootClassName?: string
+  prefixCls?: string
+  className?: string
+  style?: React.CSSProperties
+  classNames?: {
+    header?: string
+    body?: string
+    extra?: string
+    title?: string
+    actions?: string
+    cover?: string
+  }
+  styles?: {
+    header?: React.CSSProperties
+    body?: React.CSSProperties
+    extra?: React.CSSProperties
+    title?: React.CSSProperties
+    actions?: React.CSSProperties
+    cover?: React.CSSProperties
+  }
 }
 
-const ArticleTree = ({
-  data,
-  value,
-  onChange,
-  placeholder,
-  onEdit,
-  onDel,
-  height = 800,
-}: ArticleTreeProps) => {
+type ArticleTreeClassNamesModule = keyof Exclude<
+  ArticleTreeProps["classNames"],
+  undefined
+>
+type ArticleTreeStylesModule = keyof Exclude<
+  ArticleTreeProps["styles"],
+  undefined
+>
+
+const ArticleTree = React.forwardRef<any, ArticleTreeProps>((props, ref) => {
+  const {
+    data,
+    value,
+    onChange,
+    placeholder,
+    onEdit,
+    onDel,
+    height = 800,
+    prefixCls: customizePrefixCls,
+    rootClassName,
+    className,
+    style,
+    classNames: customClassNames,
+    styles: customStyles,
+  } = props
+  const { getPrefixCls, articleTree } = useContext(ConfigContext)
   const [expandedKeys, setExpandedKeys] = useState<React.Key[]>([])
   const [s, setS] = useState("key1")
   const [innerValue, setInnerValue] = useState(value || [])
   const [autoExpandParent, setAutoExpandParent] = useState(true)
+  const prefixCls = getPrefixCls("article-tree", customizePrefixCls)
+  const classString = classNames(
+    prefixCls,
+    // {
+    //   [`${prefixCls}-loading`]: loading,
+    //   [`${prefixCls}-bordered`]: bordered,
+    //   [`${prefixCls}-hoverable`]: hoverable,
+    //   [`${prefixCls}-contain-grid`]: isContainGrid,
+    //   [`${prefixCls}-contain-tabs`]: tabList?.length,
+    //   [`${prefixCls}-${mergedSize}`]: mergedSize,
+    //   [`${prefixCls}-type-${type}`]: !!type,
+    // },
+    className,
+    rootClassName,
+    articleTree?.className
+  )
+  const mergedStyle: React.CSSProperties = { ...articleTree?.style, ...style }
+  const moduleClass = (moduleName: ArticleTreeClassNamesModule) =>
+    classNames(
+      articleTree?.classNames?.[moduleName],
+      customClassNames?.[moduleName]
+    )
+
+  const moduleStyle = (
+    moduleName: ArticleTreeStylesModule
+  ): React.CSSProperties => ({
+    ...articleTree?.styles?.[moduleName],
+    ...customStyles?.[moduleName],
+  })
+
+  console.log(moduleStyle("body"), moduleClass("body"))
 
   const onExpand = (newExpandedKeys: React.Key[]) => {
     setExpandedKeys(newExpandedKeys)
@@ -104,16 +174,20 @@ const ArticleTree = ({
     }
   }, [value])
 
+  if (data.length === 0) return
+
   return (
     <Accordion
+      ref={ref}
       type="single"
       collapsible
-      className="w-full"
       value={s}
       onValueChange={(value) => setS(value)}
+      className={classString}
+      style={mergedStyle}
     >
-      <AccordionItem value="key1">
-        <AccordionTrigger>
+      <AccordionItem value="key1" className={`${prefixCls}-item`}>
+        <AccordionTrigger className={`${prefixCls}-trigger`}>
           {innerValue.length > 0 ? (
             findNodeById(data, innerValue[0]) ? (
               <div className="flex items-center gap-4">
@@ -168,6 +242,6 @@ const ArticleTree = ({
       </AccordionItem>
     </Accordion>
   )
-}
+})
 
 export { ArticleTree }
