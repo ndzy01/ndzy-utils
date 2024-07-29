@@ -84,20 +84,22 @@ export interface ArticleTreeProps {
   className?: string
   style?: React.CSSProperties
   classNames?: {
-    header?: string
-    body?: string
-    extra?: string
-    title?: string
-    actions?: string
-    cover?: string
+    t?: string
+    // header?: string
+    // body?: string
+    // extra?: string
+    // title?: string
+    // actions?: string
+    // cover?: string
   }
   styles?: {
-    header?: React.CSSProperties
-    body?: React.CSSProperties
-    extra?: React.CSSProperties
-    title?: React.CSSProperties
-    actions?: React.CSSProperties
-    cover?: React.CSSProperties
+    t?: React.CSSProperties
+    // header?: React.CSSProperties
+    // body?: React.CSSProperties
+    // extra?: React.CSSProperties
+    // title?: React.CSSProperties
+    // actions?: React.CSSProperties
+    // cover?: React.CSSProperties
   }
 }
 
@@ -161,7 +163,7 @@ const ArticleTree = React.forwardRef<any, ArticleTreeProps>((props, ref) => {
     ...customStyles?.[moduleName],
   })
 
-  console.log(moduleStyle("body"), moduleClass("body"))
+  console.log(moduleStyle("t"), moduleClass("t"))
 
   const onExpand = (newExpandedKeys: React.Key[]) => {
     setExpandedKeys(newExpandedKeys)
