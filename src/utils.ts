@@ -53,7 +53,7 @@ export const createAxiosInstance = (url: string) => {
   // 创建响应拦截
   axiosInstance.interceptors.response.use(
     (res) => {
-      message({ content: res.data.msg })
+      res.data.msg && message({ content: res.data.msg })
 
       return res.data
     },

@@ -18,8 +18,8 @@ const Login = () => {
         setLoading(false)
         if (res && res?.data?.token) {
           localStorage.setItem("token", res?.data?.token)
+          Modal.destroyAll()
         }
-        Modal.destroyAll()
       })
       .catch(() => {
         setLoading(false)
@@ -74,7 +74,6 @@ export const login = () => {
   Modal.warn({
     title: "登录已失效，请重新登陆",
     content: <Login />,
-    onOk() {},
     footer: null,
   })
 }
