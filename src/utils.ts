@@ -2,6 +2,7 @@ import axios, { AxiosInstance, AxiosRequestHeaders } from "axios"
 import { clsx, type ClassValue } from "clsx"
 import { twMerge } from "tailwind-merge"
 
+import { login } from "@/components/Login.tsx"
 import { message } from "@/components/message.tsx"
 
 export const cn = (...inputs: ClassValue[]) => {
@@ -59,6 +60,7 @@ export const createAxiosInstance = (url: string) => {
     (error) => {
       if (error?.response?.data?.statusCode === 401) {
         message({ content: "登录失效，请重新登录" })
+        login()
 
         return
       }
