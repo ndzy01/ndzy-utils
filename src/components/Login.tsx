@@ -1,5 +1,13 @@
 import * as React from "react"
-import { Button, Form, Input, Modal, type FormProps } from "antd"
+import {
+  Button,
+  ConfigProvider,
+  Form,
+  Input,
+  Modal,
+  type FormProps,
+} from "antd"
+import zhCN from "antd/locale/zh_CN"
 
 import { service } from "../utils"
 
@@ -27,39 +35,41 @@ const Login = () => {
   }
 
   return (
-    <Form
-      name="login"
-      style={{ maxWidth: 600 }}
-      initialValues={{ remember: true }}
-      onFinish={onFinish}
-      autoComplete="off"
-    >
-      <Form.Item<FieldType>
-        labelCol={{ span: 24 }}
-        wrapperCol={{ span: 24 }}
-        label="手机号"
-        name="mobile"
-        rules={[{ required: true, message: "手机号不能为空" }]}
+    <ConfigProvider locale={zhCN}>
+      <Form
+        name="login"
+        style={{ maxWidth: 600 }}
+        initialValues={{ remember: true }}
+        onFinish={onFinish}
+        autoComplete="off"
       >
-        <Input />
-      </Form.Item>
+        <Form.Item<FieldType>
+          labelCol={{ span: 24 }}
+          wrapperCol={{ span: 24 }}
+          label="手机号"
+          name="mobile"
+          rules={[{ required: true, message: "手机号不能为空" }]}
+        >
+          <Input />
+        </Form.Item>
 
-      <Form.Item<FieldType>
-        labelCol={{ span: 24 }}
-        wrapperCol={{ span: 24 }}
-        label="密码"
-        name="password"
-        rules={[{ required: true, message: "密码不能为空" }]}
-      >
-        <Input.Password />
-      </Form.Item>
+        <Form.Item<FieldType>
+          labelCol={{ span: 24 }}
+          wrapperCol={{ span: 24 }}
+          label="密码"
+          name="password"
+          rules={[{ required: true, message: "密码不能为空" }]}
+        >
+          <Input.Password />
+        </Form.Item>
 
-      <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
-        <Button type="primary" htmlType="submit" loading={loading}>
-          登陆
-        </Button>
-      </Form.Item>
-    </Form>
+        <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
+          <Button type="primary" htmlType="submit" loading={loading}>
+            登陆
+          </Button>
+        </Form.Item>
+      </Form>
+    </ConfigProvider>
   )
 }
 
