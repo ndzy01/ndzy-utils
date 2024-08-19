@@ -16,7 +16,7 @@ const Login = () => {
     service({ url: "/user/login", method: "POST", data: values })
       .then((res) => {
         setLoading(false)
-        if (res && res?.data?.token) {
+        if (res?.data?.token) {
           localStorage.setItem("token", res?.data?.token)
           Modal.destroyAll()
         }

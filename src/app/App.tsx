@@ -1,6 +1,6 @@
 import { useEffect } from "react"
 import ConfigProvider from "@/lib/configProvider.tsx"
-import { createAxiosInstance } from "@/utils.ts"
+import { service } from "@/utils.ts"
 import { observer } from "mobx-react-lite"
 
 import { ArticleTree } from "@/components/article-tree.tsx"
@@ -9,7 +9,6 @@ import { message } from "@/components/message.tsx"
 import { Button } from "../components/ui/button.tsx"
 
 const App = observer(() => {
-  const service = createAxiosInstance("https://ndzy-s.vercel.app")
   useEffect(() => {
     service({ url: "/imgs", method: "GET" })
   }, [])

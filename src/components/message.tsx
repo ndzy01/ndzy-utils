@@ -38,9 +38,11 @@ export const Message = ({
   }, [onClose, duration])
 
   return (
-    <div className={className} style={{ ...(style || {}) }}>
-      {content}
-    </div>
+    content && (
+      <div className={className} style={{ ...(style || {}) }}>
+        {content}
+      </div>
+    )
   )
 }
 
