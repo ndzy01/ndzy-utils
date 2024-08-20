@@ -1,0 +1,4 @@
+wsl: 检测到 localhost 代理配置，但未镜像到 WSL。NAT 模式下的 WSL 不支持 localhost 代理。
+https://www.cnblogs.com/hg479/p/17869109.html
+
+https://mirrors.tuna.tsinghua.edu.cn/help/ubuntu/
