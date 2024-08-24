@@ -1,4 +1,5 @@
 import * as React from "react"
+import { service } from "@/utils"
 import {
   Button,
   ConfigProvider,
@@ -8,8 +9,6 @@ import {
   type FormProps,
 } from "antd"
 import zhCN from "antd/locale/zh_CN"
-
-import { service } from "../utils"
 
 const Login = () => {
   const [loading, setLoading] = React.useState<boolean>(false)

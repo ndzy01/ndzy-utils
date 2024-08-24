@@ -1,13 +1,7 @@
 import axios, { AxiosRequestHeaders } from "axios"
-import { clsx, type ClassValue } from "clsx"
-import { twMerge } from "tailwind-merge"
 
 import { login } from "@/components/Login.tsx"
 import { message } from "@/components/message.tsx"
-
-export const cn = (...inputs: ClassValue[]) => {
-  return twMerge(clsx(inputs))
-}
 
 export const service = axios.create({
   baseURL: "https://ndzy-s.vercel.app", // 基础URL

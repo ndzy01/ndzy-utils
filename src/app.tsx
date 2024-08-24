@@ -1,8 +1,8 @@
 import React, { useState } from "react"
-import { service } from "@/utils.ts"
 import { AxiosInstance } from "axios"
 
-import { createContext } from "./createContext.tsx"
+import { createContext } from "./createContext"
+import { service } from "./utils"
 
 const NDZY_NAME = "NDZY"
 

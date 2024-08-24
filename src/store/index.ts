@@ -1,6 +1,6 @@
+import { setupStores } from "@/lib/setupStore"
 import { makeAutoObservable } from "mobx"
 
-import { setupStores } from "../lib/setupStore"
 import { Demo } from "./demo"
 
 export class RootStore {
