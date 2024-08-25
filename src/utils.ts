@@ -1,7 +1,7 @@
+import { message } from "antd"
 import axios, { AxiosRequestHeaders } from "axios"
 
 import { login } from "@/components/Login.tsx"
-import { message } from "@/components/message.tsx"
 
 export const service = axios.create({
   baseURL: "https://ndzy-s.vercel.app", // 基础URL
@@ -28,19 +28,19 @@ service.interceptors.request.use(
 
 service.interceptors.response.use(
   (response) => {
-    message({ content: response?.data?.msg })
+    message.info({ content: response?.data?.msg }).then()
 
     return response.data
   },
   (error) => {
     if (error?.response?.data?.statusCode === 401) {
-      message({ content: "登录失效，请重新登录" })
+      message.error({ content: "登录失效，请重新登录" }).then()
       login()
 
       return
     }
 
-    message({ content: "出错了，请联系管理员" })
+    message.error({ content: "出错了，请联系管理员" }).then()
   }
 )
 
