@@ -1,4 +1,5 @@
 import { CSSProperties, ReactNode, useEffect } from "react"
+import { createPortal } from "react-dom"
 import { createRoot } from "react-dom/client"
 
 import "@/components/index.css"
@@ -53,6 +54,7 @@ export const message = (params: MessageProps) => {
   notificationElement.className = `message-wrapper`
   container.appendChild(notificationElement)
   const root = createRoot(notificationElement)
+
   const removeNotification = () => {
     root.unmount()
     notificationElement.remove()
@@ -62,5 +64,10 @@ export const message = (params: MessageProps) => {
     }
   }
 
-  root.render(<Message onClose={removeNotification} {...params} />)
+  root.render(
+    createPortal(
+      <Message onClose={removeNotification} {...params} />,
+      notificationElement
+    )
+  )
 }
