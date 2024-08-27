@@ -67,7 +67,7 @@ const App = (props: { children: React.ReactNode }) => {
     setLoading(true)
     const data: any = await service({ url: `/article/${id}`, method: "GET" })
     setLoading(false)
-    setArticles(data?.data)
+    setArticle(data?.data)
 
     query().then()
   }
