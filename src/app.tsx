@@ -81,7 +81,7 @@ const App = (props: { children: React.ReactNode }) => {
 
   useEffect(() => {
     query().then()
-  })
+  }, [])
 
   return (
     <NdzyProvider
