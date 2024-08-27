@@ -2,23 +2,16 @@ import React, { useEffect, useState } from "react"
 import { AxiosInstance } from "axios"
 
 import { createContext } from "./createContext"
-import { service } from "./utils"
+import { loop, service, Tree } from "./utils"
 
 const NDZY_NAME = "NDZY"
-
-interface Article {
-  id: string
-  title: string
-  content: string
-  order: number
-}
 
 interface NdzyContextType {
   loading: boolean
   setLoading: (v: boolean) => void
   service: AxiosInstance
-  articles: Article[]
-  article?: Article
+  articles: Tree[]
+  article?: Tree
   api: {
     article: {
       query: () => Promise<void>
@@ -38,14 +31,14 @@ const App = (props: { children: React.ReactNode }) => {
   const { children } = props
 
   const [loading, setLoading] = useState(false)
-  const [articles, setArticles] = useState([])
+  const [articles, setArticles] = useState<Tree[]>([])
   const [article, setArticle] = useState()
 
   const query = async () => {
     setLoading(true)
     const data: any = await service({ url: "/article", method: "GET" })
     setLoading(false)
-    setArticles(data?.data || [])
+    setArticles(loop(data?.data || []))
   }
 
   const del = async (id: string) => {

@@ -63,3 +63,79 @@ export const clearUrlParams = (params: string[]) => {
     //
   }
 }
+
+export interface Tree {
+  id: string
+  title: string
+  order: number
+  children?: Tree[]
+
+  [k: string]: any
+}
+
+export const loop = (arr: Tree[]): Tree[] => {
+  return [...arr]
+    .sort((a, b) => a.order - b.order)
+    .map((item) => {
+      const newItem = {
+        ...item,
+        key: item.id,
+        label: item.title,
+        value: item.id,
+      }
+
+      if (Array.isArray(item.children) && item.children.length > 0) {
+        newItem.children = loop(item.children)
+      } else {
+        delete newItem.children
+      }
+
+      return newItem
+    })
+}
+
+export const findNodeById: (tree: Tree[], id: string) => string | null = (
+  tree,
+  id
+) => {
+  for (let i = 0; i < tree.length; i++) {
+    if (tree[i].id === id) {
+      return tree[i].id
+    } else if (tree[i].children) {
+      // 如果有子节点，那么对子节点进行递归查找
+      const result = findNodeById(tree[i].children!, id)
+      if (result) {
+        return result
+      }
+    }
+  }
+
+  return null // 如果没找到，返回null
+}
+
+// 递归函数来搜索具有特定标题的节点，并返回路径
+export const findPath: (
+  tree: Tree[],
+  targetId: string,
+  path?: string[]
+) => string[] = (tree, targetId, path = []) => {
+  for (const item of tree) {
+    // 当前路径加上当前节点
+    const newPath = [...path, item.title]
+
+    if (item.id === targetId) {
+      return newPath
+    }
+
+    // 如果该节点有子节点，递归搜索子节点
+    if (item.children && item.children.length) {
+      const result = findPath(item.children, targetId, newPath)
+      if (result.length > 0) {
+        return result // 如果在子树中找到目标，返回路径
+      }
+    }
+  }
+
+  // 如果没有找到目标
+  return []
+}
