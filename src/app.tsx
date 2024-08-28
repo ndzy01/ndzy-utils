@@ -51,8 +51,9 @@ const App = (props: { children: React.ReactNode }) => {
   const save = async (id: string, params: any) => {
     setLoading(true)
     await service({ url: `/article/${id}`, method: "PATCH", data: params })
+    const data: any = await service({ url: `/article/${id}`, method: "GET" })
     setLoading(false)
-    setArticle(undefined)
+    setArticle(data?.data)
     query().then()
   }
 
