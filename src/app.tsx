@@ -18,7 +18,7 @@ interface NdzyContextType {
       del: (id: string) => Promise<void>
       find: (id: string) => Promise<void>
       save: (id: string, params: any) => Promise<void>
-      create: (id: string, params: any) => Promise<void>
+      create: (params: any) => Promise<void>
     }
   }
 }
