@@ -45,6 +45,7 @@ const App = (props: { children: React.ReactNode }) => {
     setLoading(true)
     await service({ url: `/article/${id}`, method: "DELETE" })
     setLoading(false)
+    setArticle(undefined)
     query().then()
   }
 
