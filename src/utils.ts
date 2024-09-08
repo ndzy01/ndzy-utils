@@ -15,7 +15,7 @@ service.interceptors.request.use(
 
     if (token) {
       config.headers = {
-        Authorization: `Basic ${token}`,
+        Authorization: `Bearer ${token}`,
       } as AxiosRequestHeaders
     }
 
