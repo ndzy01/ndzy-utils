@@ -78,6 +78,7 @@ export const login = () => {
     title: "登录已失效，请重新登陆",
     content: <Login />,
     footer: null,
+    zIndex: 999999999,
   })
 }
 
