@@ -19,7 +19,6 @@ interface NdzyContextType {
       find: (id: string) => Promise<void>
       save: (id: string, params: any) => Promise<void>
       create: (params: any) => Promise<void>
-      uploadImg: (params: any) => Promise<any>
     }
   }
 }
@@ -66,10 +65,6 @@ const App = (props: { children: React.ReactNode }) => {
     query().then()
   }
 
-  const uploadImg = async (params: any) => {
-    return service({ url: "/imgs", method: "POST", data: params })
-  }
-
   const find = async (id: string) => {
     setLoading(true)
     const data: any = await service({ url: `/article/${id}`, method: "GET" })
@@ -90,7 +85,7 @@ const App = (props: { children: React.ReactNode }) => {
       service={service}
       articles={articles}
       article={article}
-      api={{ article: { query, del, find, save, create, uploadImg } }}
+      api={{ article: { query, del, find, save, create } }}
     >
       {children}
     </NdzyProvider>
