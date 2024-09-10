@@ -28,7 +28,7 @@ service.interceptors.request.use(
 
 service.interceptors.response.use(
   (response) => {
-    if (response?.data?.status === 1 && response?.data?.msg) {
+    if (response?.data?.msg) {
       message.info({ content: response?.data?.msg }).then()
     }
 
