@@ -24,7 +24,7 @@ const Login = () => {
       .then((res) => {
         setLoading(false)
         if (res?.data?.token) {
-          localStorage.setItem("token", res?.data?.token)
+          sessionStorage.setItem("token", res?.data?.token)
           window.location.reload()
           Modal.destroyAll()
         }
