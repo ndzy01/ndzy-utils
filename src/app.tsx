@@ -81,7 +81,7 @@ const App = (props: { children: React.ReactNode }) => {
   const initOrderData = async (id: string) => {
     setLoading(true)
     const article = await service(`/article/${id}`)
-    let data = []
+    let data: Tree[]
     if (article.data.root) {
       const d = await service("/article/pid/0")
       data = d.data
