@@ -11,6 +11,7 @@ interface NdzyContextType {
   setLoading: (v: boolean) => void
   service: AxiosInstance
   articles: Tree[]
+  articleOrderList: Tree[]
   article?: Tree
   api: {
     article: {
@@ -19,6 +20,8 @@ interface NdzyContextType {
       find: (id: string) => Promise<void>
       save: (id: string, params: any) => Promise<void>
       create: (params: any) => Promise<void>
+      initOrderData: (id: string) => Promise<void>
+      updateOrder: (data: { id: string; order: number }[]) => Promise<void>
     }
   }
 }
@@ -32,6 +35,7 @@ const App = (props: { children: React.ReactNode }) => {
 
   const [loading, setLoading] = useState(false)
   const [articles, setArticles] = useState<Tree[]>([])
+  const [articleOrderList, setArticleOrderList] = useState<Tree[]>([])
   const [article, setArticle] = useState()
 
   const query = async () => {
@@ -74,9 +78,29 @@ const App = (props: { children: React.ReactNode }) => {
     query().then()
   }
 
-  useEffect(() => {
-    query().then()
-  }, [])
+  const initOrderData = async (id: string) => {
+    setLoading(true)
+    const article = await service(`/article/${id}`)
+    let data = []
+    if (article.data.root) {
+      const d = await service("/article/pid/0")
+      data = d.data
+    } else {
+      const d = await service(`/article/pid/${article.data.parent.id}`)
+      data = d.data
+    }
+    setLoading(false)
+    setArticleOrderList(data)
+  }
+
+  const updateOrder = async (data: { id: string; order: number }[]) => {
+    setLoading(true)
+    await service(`/article/updateOrder`, {
+      data,
+      method: "POST",
+    })
+    setLoading(false)
+  }
 
   return (
     <NdzyProvider
@@ -84,8 +108,11 @@ const App = (props: { children: React.ReactNode }) => {
       setLoading={setLoading}
       service={service}
       articles={articles}
+      articleOrderList={articleOrderList}
       article={article}
-      api={{ article: { query, del, find, save, create } }}
+      api={{
+        article: { query, del, find, save, create, initOrderData, updateOrder },
+      }}
     >
       {children}
     </NdzyProvider>
