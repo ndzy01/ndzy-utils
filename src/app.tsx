@@ -11,7 +11,6 @@ interface NdzyContextType {
   setLoading: (v: boolean) => void
   service: AxiosInstance
   articles: Tree[]
-  articleOrderList: Tree[]
   article?: Tree
   api: {
     article: {
@@ -20,7 +19,7 @@ interface NdzyContextType {
       find: (id: string) => Promise<void>
       save: (id: string, params: any) => Promise<void>
       create: (params: any) => Promise<void>
-      initOrderData: (id: string) => Promise<void>
+      initOrderData: (id: string) => Promise<Tree[]>
       updateOrder: (data: { id: string; order: number }[]) => Promise<void>
     }
   }
@@ -35,7 +34,6 @@ const App = (props: { children: React.ReactNode }) => {
 
   const [loading, setLoading] = useState(false)
   const [articles, setArticles] = useState<Tree[]>([])
-  const [articleOrderList, setArticleOrderList] = useState<Tree[]>([])
   const [article, setArticle] = useState()
 
   const query = async () => {
@@ -90,7 +88,7 @@ const App = (props: { children: React.ReactNode }) => {
       data = d.data
     }
     setLoading(false)
-    setArticleOrderList(data)
+    return data
   }
 
   const updateOrder = async (data: { id: string; order: number }[]) => {
@@ -108,7 +106,6 @@ const App = (props: { children: React.ReactNode }) => {
       setLoading={setLoading}
       service={service}
       articles={articles}
-      articleOrderList={articleOrderList}
       article={article}
       api={{
         article: { query, del, find, save, create, initOrderData, updateOrder },
