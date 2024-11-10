@@ -3,7 +3,7 @@ import { observer } from "mobx-react-lite"
 
 import { message } from "@/components/message"
 
-import { App as IApp, service } from ".."
+import { App as IApp, LoginInput, service } from ".."
 
 const App = observer(() => {
   useEffect(() => {
@@ -16,6 +16,7 @@ const App = observer(() => {
 
   return (
     <IApp>
+      <LoginInput />
       <button onClick={info}>111</button>
     </IApp>
   )
